@@ -4,13 +4,12 @@ import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCt3IbS062aN2jfyyjCna5q9v1eIIfOdI4",
-  authDomain: "folketinget-d24a1.firebaseapp.com",
-  projectId: "folketinget-d24a1",
-  storageBucket: "folketinget-d24a1.firebasestorage.app",
-  messagingSenderId: "641004282795",
-  appId: "1:641004282795:web:50a4d3a77025777556a8ee",
-  measurementId: "G-RVWDY6626S"
+  apiKey: "AIzaSyADF_yqmTroL3NHL_46lvGnLjvlr58ZuEQ",
+  authDomain: "folketinget-f02cf.firebaseapp.com",
+  projectId: "folketinget-f02cf",
+  storageBucket: "folketinget-f02cf.firebasestorage.app",
+  messagingSenderId: "32583519355",
+  appId: "1:32583519355:web:b69ea1f3005d846277e6de"
 };
 
 // Initialize Firebase

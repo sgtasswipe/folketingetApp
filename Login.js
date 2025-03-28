@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   TextInput,
@@ -10,14 +10,28 @@ import {
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  onAuthStateChanged
 } from "firebase/auth";
 import { auth } from "./firebaseConfig";
 import { styles } from "./LoginStyles";
+import MainApp from "./MainTabs";
 
-export default function Login2() {
+
+export default function Login({ navigation }) {
+ 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const colorScheme = useColorScheme();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if(user) {
+        navigation.replace("MainApp")
+      }
+  });
+  return unsubscribe;
+}, []);
+   
 
   function handleLogin() {
     signInWithEmailAndPassword(auth, email, password)
@@ -27,13 +41,7 @@ export default function Login2() {
       .catch((error) => console.log("Error:", error.message));
   }
 
-  function handleSignUp() {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredentials) =>
-        console.log("Signed up with:", userCredentials.user.email)
-      )
-      .catch((error) => console.log("Error:", error.message));
-  }
+  
 
   return (
     <View
@@ -42,8 +50,7 @@ export default function Login2() {
         { backgroundColor: colorScheme === "dark" ? "black" : "white" },
       ]}
     >
-      <Text style={styles.title}>Velkommen til folketinget</Text>
-      <Text style={styles.subtitle}>Log in her:</Text>
+      <Text style={styles.title}>Log in her:</Text>
 
       <TextInput
         placeholder="Email"
@@ -60,8 +67,13 @@ export default function Login2() {
         style={styles.inputStyle}
       />
 
-      <Pressable style={styles.buttonStyle} onPress={handleSignUp}>
-        <Text style={styles.buttonText}>Sign Up</Text>
+      <Pressable style={styles.buttonStyle} onPress={handleLogin}> 
+        <Text style={styles.buttonText}>Login</Text>
+      </Pressable>
+
+        {/* Button to navigate to SignUp screen */}
+        <Pressable style={styles.buttonStyle} onPress={() => navigation.navigate("SignUp")}>
+        <Text style={styles.buttonText}>Opret dig som bruger</Text>
       </Pressable>
     </View>
   );
