@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./firebaseConfig";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import MainApp from "./MainTabs"; // Bottom Tabs after login
-
-const Stack = createNativeStackNavigator();
+import { createStackNavigator } from "@react-navigation/stack"; // Change this
+import HomeScreen from "./HomeScreen";
+const Stack = createStackNavigator();
 
 export default function App() {
   const [user, setUser] = useState(null);
@@ -24,7 +24,8 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {user ? (
-          <Stack.Screen name="MainApp" component={MainApp} />
+       <Stack.Screen name="MainApp" component={MainApp} options={{ headerShown: false }} />
+
         ) : (
           <>
             <Stack.Screen name="Login" component={Login} />

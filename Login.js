@@ -5,7 +5,7 @@ import {
   Text,
   Pressable,
   StyleSheet,
-  useColorScheme,
+  useColorScheme, 
 } from "react-native";
 import {
   createUserWithEmailAndPassword,
@@ -14,7 +14,9 @@ import {
 } from "firebase/auth";
 import { auth } from "./firebaseConfig";
 import { styles } from "./LoginStyles";
-import MainApp from "./MainTabs";
+import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+
+
 
 
 export default function Login({ navigation }) {
@@ -25,12 +27,16 @@ export default function Login({ navigation }) {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if(user) {
-        navigation.replace("MainApp")
+      if (user) {
+        // Don't use navigation.reset here - the App.js component
+        // will automatically update due to state change
+        console.log("User is signed in:", user.email);
       }
-  });
-  return unsubscribe;
-}, []);
+    });
+    return unsubscribe;
+  }, []);
+  
+  
    
 
   function handleLogin() {
@@ -44,6 +50,7 @@ export default function Login({ navigation }) {
   
 
   return (
+    <KeyboardAwareScrollView>
     <View
       style={[
         styles.container,
@@ -51,7 +58,6 @@ export default function Login({ navigation }) {
       ]}
     >
       <Text style={styles.title}>Log in her:</Text>
-
       <TextInput
         placeholder="Email"
         value={email}
@@ -75,6 +81,8 @@ export default function Login({ navigation }) {
         <Pressable style={styles.buttonStyle} onPress={() => navigation.navigate("SignUp")}>
         <Text style={styles.buttonText}>Opret dig som bruger</Text>
       </Pressable>
-    </View>
+      </View>
+      </KeyboardAwareScrollView>
+  
   );
 }
