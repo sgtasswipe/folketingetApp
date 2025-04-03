@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, use } from 'react';
 import { 
   View, 
   Text, 
@@ -16,6 +16,7 @@ const AfstemningerScreen = () => {
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const pageSize = 20;
+  const [selected, setSelected]  = useState(null)
 
   const fetchVotingData = async () => {
     try {
@@ -46,7 +47,7 @@ const AfstemningerScreen = () => {
   // Initial data fetch
   useEffect(() => {
     fetchVotingData();
-  }, [page]);
+  }, [page]);  // dependency array. react will re-run this useEffect ( fetching vote data again) whenever page's state is updated. 
 
   const loadMoreData = () => {
     if (!loading && hasMore) {
@@ -60,16 +61,18 @@ const AfstemningerScreen = () => {
     return format(date, 'd. MMMM yyyy', { locale: da });
   };
 
+  
   const renderVotingCard = ({ item }) => {
     return (
       <TouchableOpacity 
+      onPress={() => setSelected(item.id === selected ? null : item.id)}
         style={[
           styles.card,
           { borderLeftColor: item.vedtaget ? '#4CAF50' : '#F44336' }
         ]}
       >
         <View style={styles.cardHeader}>
-          <Text style={styles.cardTitle}>Afstemning #{item.nummer}</Text>
+          <Text style={styles.cardTitle}>Afstemning #{item.nummer}</Text> 
           <Text style={[
             styles.statusBadge, 
             { backgroundColor: item.vedtaget ? '#E8F5E9' : '#FFEBEE' }
@@ -77,16 +80,20 @@ const AfstemningerScreen = () => {
             {item.vedtaget ? 'Vedtaget' : 'Ikke vedtaget'}
           </Text>
         </View>
-        
+      
         <Text style={styles.dateText}>
           {formatDate(item.opdateringsdato)}
         </Text>
-        
-        {item.konklusion && (
+        {selected ==item.id ? ( 
+            <Text>{item.konklusion}</Text>
+        ) :  (
+        item.konklusion &&  (
           <Text style={styles.conclusionText} numberOfLines={3}>
             {item.konklusion.replace(/\\n/g, '\n')}
           </Text>
+        )
         )}
+
         
         <View style={styles.cardFooter}>
           <Text style={styles.meetingText}>Møde ID: {item.mødeid}</Text>
