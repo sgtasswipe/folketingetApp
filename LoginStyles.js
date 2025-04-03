@@ -2,11 +2,11 @@ import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
-    paddingTop: 300,
+    paddingTop: 285,
     flex: 1,
     justifyContent: 'center',
     alignItems: 'center',
-    padding: 16,
+    
   },
   title: {
     fontSize: 24,
@@ -28,6 +28,7 @@ export const styles = StyleSheet.create({
     backgroundColor: 'white',
   },
   buttonStyle: {
+    flex: 1,
     backgroundColor: '#007BFF',
     paddingVertical: 14,
     paddingHorizontal: 24,
@@ -37,6 +38,9 @@ export const styles = StyleSheet.create({
     shadowOpacity: 0.2,
     shadowRadius: 4,
     elevation: 3,
+    minWidth: 215,
+    marginBottom: 10,
+    alignContent: 'center'
   },
   buttonText: {
     color: 'white',
