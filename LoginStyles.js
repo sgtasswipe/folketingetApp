@@ -1,50 +1,40 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
-    paddingTop: 285,
+    paddingTop: 150,
     flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    
+    justifyContent: "center",
+    alignItems: "center",
+    padding: 20,
   },
   title: {
     fontSize: 24,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  subtitle: {
-    fontSize: 18,
+    fontWeight: "bold",
     marginBottom: 20,
+    color: "#a6192e", // Pale red title
   },
   inputStyle: {
-    width: '80%',
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 12,
-    paddingHorizontal: 10,
+    width: "100%",
+    padding: 12,
+    marginBottom: 16,
     borderRadius: 8,
-    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: "#a6192e",
+    backgroundColor: "#f5f5f5", // Light gray background
+    fontSize: 16,
   },
   buttonStyle: {
-    flex: 1,
-    backgroundColor: '#007BFF',
-    paddingVertical: 14,
-    paddingHorizontal: 24,
-    borderRadius: 10,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOpacity: 0.2,
-    shadowRadius: 4,
-    elevation: 3,
-    minWidth: 215,
-    marginBottom: 10,
-    alignContent: 'center'
+    width: "100%",
+    padding: 12,
+    backgroundColor: "#a6192e",
+    borderRadius: 8,
+    alignItems: "center",
+    marginTop: 10,
   },
   buttonText: {
-    color: 'white',
-    fontWeight: 'bold',
+    color: "white",
     fontSize: 16,
+    fontWeight: "bold",
   },
 });
