@@ -10,7 +10,7 @@ import {
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
-  onAuthStateChanged
+  onAuthStateChanged, signInAnonymously
 } from "firebase/auth";
 import { auth } from "./firebaseConfig";
 import { styles } from "./LoginStyles";
@@ -47,6 +47,11 @@ export default function Login({ navigation }) {
       .catch((error) => console.log("Error:", error.message));
   }
 
+  function handleGuestLogin() {
+    signInAnonymously(auth).then().catch((error)=> console.log("An error occured:", error.message))
+    
+  }
+
   
 
   return (
@@ -81,6 +86,9 @@ export default function Login({ navigation }) {
         <Pressable style={styles.buttonStyle} onPress={() => navigation.navigate("SignUp")}>
         <Text style={styles.buttonText}>Opret dig som bruger</Text>
       </Pressable>
+      <Pressable style={styles.buttonStyle} onPress={handleGuestLogin}>
+        <Text style={styles.buttonText}>Forsæt som gæst</Text>
+        </Pressable>
       </View>
       </KeyboardAwareScrollView>
   
