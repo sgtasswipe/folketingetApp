@@ -84,10 +84,12 @@ const AfstemningerScreen = () => {
         <Text style={styles.dateText}>
           {formatDate(item.opdateringsdato)}
         </Text>
+
         {selected ==item.id ? ( 
             <Text>{item.konklusion}</Text>
         ) :  (
-        item.konklusion &&  (
+        selected==item.id, item.konklusion &&    (
+        
           <Text style={styles.conclusionText} numberOfLines={3}>
             {item.konklusion.replace(/\\n/g, '\n')}
           </Text>
