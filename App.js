@@ -6,7 +6,6 @@ import Login from "./Login";
 import SignUp from "./SignUp";
 import MainApp from "./MainTabs"; // Bottom Tabs after login
 import { createStackNavigator } from "@react-navigation/stack"; // Change this
-import HomeScreen from "./HomeScreen";
 const Stack = createStackNavigator();
 
 export default function App() {
