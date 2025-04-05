@@ -24,7 +24,7 @@ const AfstemningerScreen = () => {
     try {
       // Using $skip and $top for pagination
       const response = await fetch(
-        `https://oda.ft.dk/api/Afstemning?$inlinecount=allpages&$orderby=opdateringsdato desc&$skip=${page * pageSize}&$top=${pageSize}`
+        `https://oda.ft.dk/api/Afstemning?$inlinecount=allpages&$orderby=opdateringsdato desc&$skip=${page * pageSize}&$top=${pageSize}&$expand=Sagstrin,Sagstrin/Sag`
       );
       const data = await response.json();
       
@@ -63,6 +63,8 @@ const AfstemningerScreen = () => {
     return format(date, 'd. MMMM yyyy', { locale: da });
   };
 
+
+
   
   const renderVotingCard = ({ item }) => {
     return (
@@ -73,20 +75,22 @@ const AfstemningerScreen = () => {
           { borderLeftColor: item.vedtaget ? '#4CAF50' : '#F44336' }
         ]}
       >
-        <View style={styles.cardHeader}>
-          <Text style={styles.cardTitle}>Afstemning #{item.nummer}</Text> 
-          <Text style={[
-            styles.statusBadge, 
-            { backgroundColor: item.vedtaget ? '#E8F5E9' : '#FFEBEE' }
-          ]}>
-            {item.vedtaget ? 'Vedtaget' : 'Ikke vedtaget'}
-          </Text>
-        </View>
+      <View style={[styles.cardHeader, { flexDirection: 'column', alignItems: 'flex-start' }]}>
+       <Text style={styles.cardTitle}>
+        {item.Sagstrin.Sag.titel}
+        </Text>
+
+       
+      </View>
       
         <Text style={styles.dateText}>
           {formatDate(item.opdateringsdato)}
         </Text>
 
+        <Text style={[styles.statusBadge, { backgroundColor: item.vedtaget ? '#E8F5E9' : '#FFEBEE' }]}>
+        {item.vedtaget ? 'Vedtaget' : 'Ikke vedtaget'}
+        </Text>
+        
         {selected ==item.id ? ( 
             <Text>{item.konklusion}</Text>
         ) :  (
