@@ -8,12 +8,11 @@ import {
   useColorScheme, 
 } from "react-native";
 import {
-  createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   onAuthStateChanged, signInAnonymously
 } from "firebase/auth";
 import { auth } from "./firebaseConfig";
-import { styles } from "./LoginStyles";
+import { styles } from "./styles/LoginStyles";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 

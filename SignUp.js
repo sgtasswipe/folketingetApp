@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "./firebaseConfig";
-import { styles } from "./LoginStyles";
+import { styles } from "./styles/LoginStyles";
 
 export default function SignUp2() {
   const [email, setEmail] = useState("");
