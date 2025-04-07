@@ -1,8 +1,8 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import HomeScreen from "./HomeScreen";
-import AfstemningerScreen from "./AfstemningerScreen"
-import AboutScreen from "./AboutScreen";
+import HomeScreen from "./screens/HomeScreen";
+import AfstemningerScreen from "./screens/AfstemningerScreen"
+import AboutScreen from "./screens/AboutScreen";
 import { Ionicons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();

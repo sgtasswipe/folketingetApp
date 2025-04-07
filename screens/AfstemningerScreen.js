@@ -5,8 +5,8 @@ import {
   FlatList, 
   ActivityIndicator,
 } from 'react-native';
-import { styles } from "./styles/AfstemningerScreenStyles";
-import VotingCard from './VotingCard';  
+import { styles } from "../styles/AfstemningerScreenStyles";
+import VotingCard from '../VotingCard';  
 
 
 const AfstemningerScreen = () => {
