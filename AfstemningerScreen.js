@@ -6,7 +6,7 @@ import {
   ActivityIndicator,
 } from 'react-native';
 import { styles } from "./styles/AfstemningerScreenStyles";
-import VotingCard from './VotingCard';  // Assuming VotingCard is in the same directory
+import VotingCard from './VotingCard';  
 
 
 const AfstemningerScreen = () => {
