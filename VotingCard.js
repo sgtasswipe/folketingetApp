@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
 import { styles } from "./styles/AfstemningerScreenStyles"; 
-import { formatDate } from './dateFormatter'; 
+import { formatDate } from './utilities/dateFormatter'; 
 
 const VotingCard = ({ item, selected, setSelected }) => {
 

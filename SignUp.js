@@ -4,11 +4,10 @@ import {
   TextInput,
   Text,
   Pressable,
-  StyleSheet,
   useColorScheme,
 } from "react-native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "./firebaseConfig";
+import { auth } from "./utilities/firebaseConfig";
 import { styles } from "./styles/LoginStyles";
 
 export default function SignUp2() {

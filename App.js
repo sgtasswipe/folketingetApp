@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./firebaseConfig";
+import { auth } from "./utilities/firebaseConfig";
 import Login from "./Login";
 import SignUp from "./SignUp";
 import MainApp from "./MainTabs"; // Bottom Tabs after login
