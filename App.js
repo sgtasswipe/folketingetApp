@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { onAuthStateChanged } from "firebase/auth";
 import { auth } from "./utilities/firebaseConfig";
-import Login from "./Login";
-import SignUp from "./SignUp";
+import Login from "./user_management/Login";
+import SignUp from "./user_management/SignUp";
 import MainApp from "./MainTabs"; // Bottom Tabs after login
 import { createStackNavigator } from "@react-navigation/stack"; // Change this
 const Stack = createStackNavigator();

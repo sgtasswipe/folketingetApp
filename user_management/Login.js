@@ -11,8 +11,8 @@ import {
   signInWithEmailAndPassword,
   onAuthStateChanged, signInAnonymously
 } from "firebase/auth";
-import { auth } from "./utilities/firebaseConfig";
-import { styles } from "./styles/LoginStyles";
+import { auth } from "../utilities/firebaseConfig";
+import { styles } from "../styles/LoginStyles";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
 
