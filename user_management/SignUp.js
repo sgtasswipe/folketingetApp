@@ -7,8 +7,8 @@ import {
   useColorScheme,
 } from "react-native";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "./utilities/firebaseConfig";
-import { styles } from "./styles/LoginStyles";
+import { auth } from "../utilities/firebaseConfig";
+import { styles } from "../styles/LoginStyles";
 
 export default function SignUp2() {
   const [email, setEmail] = useState("");

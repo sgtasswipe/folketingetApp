@@ -3,6 +3,7 @@ import {
   View, 
   Text, 
   FlatList, 
+  TextInput,
   ActivityIndicator,
 } from 'react-native';
 import { styles } from "../styles/AfstemningerScreenStyles";
@@ -16,6 +17,11 @@ const AfstemningerScreen = () => {
   const [hasMore, setHasMore] = useState(true);
   const pageSize = 20;
   const [selected, setSelected]  = useState(null)
+
+
+// Search functionality
+  const [searchQuery, setSearchQuery] = useState('');
+  const [filteredData, setFilteredData] = useState([]);
 
   const fetchVotingData = async () => {
     try {
@@ -48,6 +54,22 @@ const AfstemningerScreen = () => {
     fetchVotingData();
   }, [page]);  // dependency array. react will re-run this useEffect ( fetching vote data again) whenever page's state is updated. 
 
+
+  useEffect(() => {
+    if (searchQuery.trim() === '') {
+      setFilteredData(votingData);
+    } else {
+      const query = searchQuery.toLowerCase();
+  
+      const filtered = votingData.filter(item => {
+        const title = item?.Sagstrin?.Sag?.titel?.toLowerCase() || '';
+        const conclusion = item?.konklusion?.toLowerCase() || '';
+        return title.includes(query) || conclusion.includes(query);
+      });
+  
+      setFilteredData(filtered);
+    }
+  }, [searchQuery, votingData]);
   const loadMoreData = () => {
     if (!loading && hasMore) {
       setPage(prevPage => prevPage + 1);
@@ -73,18 +95,25 @@ const AfstemningerScreen = () => {
 
   return (
     <View style={styles.container}>
+
+    <TextInput
+    style={styles.searchInput}
+    placeholder="Søg i afstemninger..."
+    value={searchQuery}
+    onChangeText={text => setSearchQuery(text)}
+    />
       <Text style={styles.screenTitle}>Afstemninger</Text>
       
       {votingData.length > 0 ? (
-        <FlatList
-          data={votingData}
-          keyExtractor={item => item.id.toString()}
-          renderItem={renderVotingCard}
-          onEndReached={loadMoreData}
-          onEndReachedThreshold={0.5}
-          ListFooterComponent={renderFooter}
-          contentContainerStyle={styles.listContainer}
-        />
+       <FlatList
+       data={filteredData}
+       keyExtractor={item => item.id.toString()}
+       renderItem={renderVotingCard}
+       onEndReached={loadMoreData}
+       onEndReachedThreshold={0.5}
+       ListFooterComponent={renderFooter}
+       contentContainerStyle={styles.listContainer}
+     />
       ) : loading ? (
         <View style={styles.centeredContainer}>
           <ActivityIndicator size="large" color="#0066cc" />
