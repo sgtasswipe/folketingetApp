@@ -1,15 +1,9 @@
 import React from 'react';
 import { View, Text, TouchableOpacity } from 'react-native';
-import { format } from 'date-fns';
-import { da } from 'date-fns/locale';
-import { styles } from "./styles/AfstemningerScreenStyles";  // Assuming styles are shared
+import { styles } from "./styles/AfstemningerScreenStyles"; 
+import { formatDate } from './dateFormatter'; 
 
 const VotingCard = ({ item, selected, setSelected }) => {
-
-    const formatDate = (dateString) => {
-        const date = new Date(dateString);
-        return format(date, 'd. MMMM yyyy', { locale: da });
-      };
 
   return (
     <TouchableOpacity 
