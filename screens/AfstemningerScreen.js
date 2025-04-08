@@ -1,4 +1,4 @@
-import React, { useState, useEffect, use } from 'react';
+import React, { useState, useEffect } from 'react';
 import { 
   View, 
   Text, 
@@ -63,13 +63,16 @@ const AfstemningerScreen = () => {
   
       const filtered = votingData.filter(item => {
         const title = item?.Sagstrin?.Sag?.titel?.toLowerCase() || '';
-        const conclusion = item?.konklusion?.toLowerCase() || '';
-        return title.includes(query) || conclusion.includes(query);
+        return title.includes(query);
       });
+
+      
   
       setFilteredData(filtered);
     }
   }, [searchQuery, votingData]);
+  
+  
   const loadMoreData = () => {
     if (!loading && hasMore) {
       setPage(prevPage => prevPage + 1);
@@ -104,7 +107,7 @@ const AfstemningerScreen = () => {
     />
       <Text style={styles.screenTitle}>Afstemninger</Text>
       
-      {votingData.length > 0 ? (
+      {filteredData.length > 0 ? (
        <FlatList
        data={filteredData}
        keyExtractor={item => item.id.toString()}
@@ -114,11 +117,6 @@ const AfstemningerScreen = () => {
        ListFooterComponent={renderFooter}
        contentContainerStyle={styles.listContainer}
      />
-      ) : loading ? (
-        <View style={styles.centeredContainer}>
-          <ActivityIndicator size="large" color="#0066cc" />
-          <Text style={styles.loadingText}>Indlæser afstemninger...</Text>
-        </View>
       ) : (
         <View style={styles.centeredContainer}>
           <Text style={styles.noDataText}>Ingen afstemninger fundet</Text>
