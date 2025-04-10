@@ -5,8 +5,9 @@ import {
   FlatList,
   TextInput,
   ActivityIndicator,
-  Button,
+  Keyboard,
 } from "react-native";
+import Icon from "react-native-vector-icons/Ionicons";
 import { styles } from "../styles/AfstemningerScreenStyles";
 import VotingCard from "../VotingCard";
 
@@ -94,13 +95,20 @@ const AfstemningerScreen = () => {
 
   return (
     <View style={styles.container}>
-      <TextInput
-        style={styles.searchInput}
-        placeholder="Søg i afstemninger..."
-        value={searchQuery}
-        onChangeText={(text) => setSearchQuery(text)}
-      />
-      <Button title="Search" onPress={handleSearchButtonClick} />
+      <View style={styles.searchContainer}>
+        <Icon name="search" size={20} color="#888" style={styles.searchIcon} />
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Søg i afstemninger..."
+          value={searchQuery}
+          onChangeText={(text) => setSearchQuery(text)}
+          returnKeyType="search"
+          onSubmitEditing={() => {
+            handleSearchButtonClick();
+            Keyboard.dismiss();
+          }}
+        />
+      </View>
       <Text style={styles.screenTitle}>Afstemninger</Text>
 
       {votingData.length > 0 ? (
