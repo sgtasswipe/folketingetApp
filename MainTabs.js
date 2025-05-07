@@ -1,13 +1,16 @@
 import React from "react";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { createStackNavigator } from "@react-navigation/stack";
 import HomeScreen from "./screens/HomeScreen";
-import AfstemningerScreen from "./screens/AfstemningerScreen"
+import AfstemningerScreen from "./screens/AfstemningerScreen";
 import AboutScreen from "./screens/AboutScreen";
+import VoteInformationScreen from "./screens/VoteInformationScreen";
 import { Ionicons } from '@expo/vector-icons';
 
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
-export default function MainApp() {
+function BottomTabs() {
   return (
     <Tab.Navigator
       screenOptions={({ route }) => ({
@@ -26,7 +29,7 @@ export default function MainApp() {
         },
         tabBarActiveTintColor: "#a6192e",
         tabBarInactiveTintColor: "gray",
-        headerShown: false, // Optional: hide header for cleaner look
+        headerShown: false,
       })}
     >
       <Tab.Screen name="Home" component={HomeScreen} />
@@ -34,4 +37,13 @@ export default function MainApp() {
       <Tab.Screen name="Om data" component={AboutScreen} />
     </Tab.Navigator>
   );
-} 
+}
+
+export default function MainApp() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="Tabs" component={BottomTabs} />
+      <Stack.Screen name="VoteInformation" component={VoteInformationScreen} options={{ headerShown: true, headerTintColor: '#a6192e', headerTitle: 'Afstemning' }} />
+    </Stack.Navigator>
+  );
+}

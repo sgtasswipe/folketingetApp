@@ -1,12 +1,14 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
+import { useNavigation } from '@react-navigation/native';
 import { styles } from "./styles/VotingCardStyles";
 import { formatDate } from "./utilities/dateFormatter";
 
-const VotingCard = ({ item, selected, setSelected }) => {
+const VotingCard = ({ item }) => {
+  const navigation = useNavigation();
   return (
     <TouchableOpacity
-      onPress={() => setSelected(item.id === selected ? null : item.id)}
+      onPress={() => navigation.navigate('VoteInformation', { item })}
       style={[
         styles.card,
         { borderLeftColor: item.vedtaget ? "#4CAF50" : "#F44336" },
@@ -21,7 +23,7 @@ const VotingCard = ({ item, selected, setSelected }) => {
         <Text style={styles.cardTitle}>{item.Sagstrin.Sag.titel}</Text>
       </View>
 
-      <Text style={styles.dateText}>{formatDate(item.opdateringsdato)}</Text>
+      <Text style={styles.dateText}>Opdateringsdato: {formatDate(item.opdateringsdato)}</Text>
 
       <Text
         style={[
@@ -31,16 +33,6 @@ const VotingCard = ({ item, selected, setSelected }) => {
       >
         {item.vedtaget ? "Vedtaget" : "Ikke vedtaget"}
       </Text>
-
-      {selected === item.id && (
-        <>
-          <Text>{item.konklusion}</Text>
-          <View style={styles.cardFooter}>
-            <Text style={styles.meetingText}>Møde ID: {item.mødeid}</Text>
-            <Text style={styles.typeText}>Type: {item.typeid}</Text>
-          </View>
-        </>
-      )}
     </TouchableOpacity>
   );
 };

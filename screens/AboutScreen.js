@@ -9,7 +9,7 @@ const AboutScreen = () => {
       <View style={styles.card}>
         <Text style={styles.label}>Afstemningstype (typeId)</Text>
         <Text style={styles.text}>
-          En numerisk kode, som angiver hvilken type afstemning der er tale om. Eksempler kan være:
+          En numerisk kode, som angiver hvilken type afstemning der er tale om:
           {"\n"}• 1 – Lovforslag
           {"\n"}• 2 – Beslutningsforslag
           {"\n"}• 3 – Forespørgsel m.m.
@@ -17,16 +17,29 @@ const AboutScreen = () => {
       </View>
 
       <View style={styles.card}>
-        <Text style={styles.label}>Møde ID (mødeid)</Text>
+        <Text style={styles.label}>Partiforkortelser</Text>
         <Text style={styles.text}>
-          ID'et på det folketingsmøde, hvor afstemningen fandt sted. Det bruges til at spore hvilken dag og kontekst afstemningen blev gennemført i.
+          I andre datafelter, fx stemmeoplysninger, vil du kunne se forkortelser som "S", "V", "Ø", osv. som står for partier:
+          {"\n"}• A – Socialdemokratiet
+          {"\n"}• V - Venstre
+          {"\n"}• DD - Danmarksdemokraterne
+          {"\n"}• SF - Socialistisk Folkeparti
+          {"\n"}• LA - Liberal Alliance
+          {"\n"}• M - Moderaterne
+          {"\n"}• KF - Det Konservative Folkeparti
+          {"\n"}• EL - Enhedslisten
+          {"\n"}• DF - Dansk Folkeparti
+          {"\n"}• RV - Radikale Venstre
+          {"\n"}• ALT - Alternativet
+          {"\n"}• BP - Borgerens Parti
+          {"\n"}• UFG - Uden for gruppe
         </Text>
       </View>
 
       <View style={styles.card}>
-        <Text style={styles.label}>Vedtaget</Text>
+        <Text style={styles.label}>Møde ID (mødeid)</Text>
         <Text style={styles.text}>
-          Et felt der viser om forslaget blev vedtaget (true) eller forkastet (false).
+          ID'et på det folketingsmøde, hvor afstemningen fandt sted. Det bruges til at spore hvilken dag og kontekst afstemningen blev gennemført i.
         </Text>
       </View>
 
@@ -50,19 +63,6 @@ const AboutScreen = () => {
           Datoen hvor afstemningen sidst blev opdateret i systemet. Dette kan være forskelligt fra selve mødedatoen.
         </Text>
       </View>
-
-      <View style={styles.card}>
-        <Text style={styles.label}>Partiforkortelser</Text>
-        <Text style={styles.text}>
-          I andre datafelter, fx stemmeoplysninger, vil du kunne se forkortelser som "S", "V", "Ø", osv. som står for partier:
-          {"\n"}• S – Socialdemokratiet
-          {"\n"}• V – Venstre
-          {"\n"}• Ø – Enhedslisten
-          {"\n"}• Å – Alternativet
-          {"\n"}• O – Dansk Folkeparti
-          {"\n"}• osv.
-        </Text>
-      </View>
     </ScrollView>
   );
 };
@@ -71,7 +71,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
-    padding: 16,
+    padding: 19,
   },
   header: {
     fontSize: 24,
@@ -79,6 +79,7 @@ const styles = StyleSheet.create({
     color: '#a6192e',
     marginBottom: 16,
     textAlign: 'center',
+    paddingTop: 25,
   },
   card: {
     backgroundColor: '#f9f9f9',

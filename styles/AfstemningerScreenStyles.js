@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f5f5f5",
     padding: 8,
-    paddingTop: 40,
+    paddingTop: 60,
   },
   screenTitle: {
     fontSize: 24,
@@ -47,8 +47,9 @@ export const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    marginBottom: 12,
+    marginBottom: 10,
     marginHorizontal: 8,
+    paddingTop: 8,
   },
   searchIcon: {
     marginRight: 8, // Space between icon and text input
