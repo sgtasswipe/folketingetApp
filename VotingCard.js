@@ -4,9 +4,18 @@ import { useNavigation } from '@react-navigation/native';
 import { styles } from "./styles/VotingCardStyles";
 import { formatDate } from "./utilities/dateFormatter";
 
-const VotingCard = ({ item }) => {
-  const navigation = useNavigation();
+
+function monthSplitter({item}) {
+  date = item.opdateringsdato
+  let monthNumber = date.slice(5,7)
+  console.log(monthNumber)
+  
+}
+const VotingCard = ({ item, selected, setSelected }) => {
+  monthSplitter({item})
+   const navigation = useNavigation();
   return (
+    
     <TouchableOpacity
       onPress={() => navigation.navigate('VoteInformation', { item })}
       style={[

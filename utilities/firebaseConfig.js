@@ -1,9 +1,8 @@
-// This file is used to initialize Firebase with the configuration details of the project.
-import { initializeApp, getReactNativePersistence } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
-import Constants from 'expo-constants';
+import Constants from "expo-constants";
 
+// Use environment variables from app.json (expo.extra)
 const firebaseConfig = {
   apiKey: Constants.expoConfig.extra.firebaseApiKey,
   authDomain: Constants.expoConfig.extra.firebaseAuthDomain,
@@ -15,5 +14,9 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app)
-export const db = getFirestore(app)
+
+// Initialize Firestore and Storage (auth removed for now)
+const db = getFirestore(app);
+
+
+export { db };

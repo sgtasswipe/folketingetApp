@@ -1,36 +1,29 @@
 import React, { useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./utilities/firebaseConfig";
+import { createStackNavigator } from "@react-navigation/stack";
+
+import MainApp from "./MainTabs";
 import Login from "./user_management/Login";
 import SignUp from "./user_management/SignUp";
-import MainApp from "./MainTabs"; // Bottom Tabs after login
-import { createStackNavigator } from "@react-navigation/stack"; // Change this
+
+
+// Create stack navigator
 const Stack = createStackNavigator();
 
 export default function App() {
-  const [user, setUser] = useState(null);
+ 
+  const [session, setSession] = useState(null);
+const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-    });
 
-    return unsubscribe; // Cleanup listener
-  }, []);
+
 
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {user ? (
-       <Stack.Screen name="MainApp" component={MainApp} options={{ headerShown: false }} />
-
-        ) : (
-          <>
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen name="SignUp" component={SignUp} />
-          </>
-        )}
+        
+          <Stack.Screen name="MainApp" component={MainApp} />
+        
       </Stack.Navigator>
     </NavigationContainer>
   );

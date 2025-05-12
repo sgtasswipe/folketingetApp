@@ -1,8 +1,13 @@
 import { registerRootComponent } from 'expo';
-
 import App from './App';
+import { LogBox } from 'react-native';
 
-// registerRootComponent calls AppRegistry.registerComponent('main', () => App);
-// It also ensures that whether you load the app in Expo Go or in a native build,
-// the environment is set up appropriately
+// Ignore specific Firebase-related warnings
+LogBox.ignoreLogs([
+  'Setting a timer',
+  'AsyncStorage has been extracted',
+  'Possible Unhandled Promise Rejection'
+]);
+
+// Register the root component
 registerRootComponent(App);
