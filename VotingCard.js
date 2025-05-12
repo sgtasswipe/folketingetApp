@@ -3,8 +3,19 @@ import { View, Text, TouchableOpacity } from "react-native";
 import { styles } from "./styles/VotingCardStyles";
 import { formatDate } from "./utilities/dateFormatter";
 
+function weeksplitter({item}) {
+ 
+}
+function monthSplitter({item}) {
+  date = item.opdateringsdato
+  let monthNumber = date.slice(5,7)
+  console.log(monthNumber)
+  
+}
 const VotingCard = ({ item, selected, setSelected }) => {
+  monthSplitter({item})
   return (
+    
     <TouchableOpacity
       onPress={() => setSelected(item.id === selected ? null : item.id)}
       style={[

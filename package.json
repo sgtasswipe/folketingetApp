@@ -19,6 +19,7 @@
     "dotenv": "^16.5.0",
     "expo": "^53.0.5",
     "expo-constants": "^17.1.5",
+    "expo-dev-client": "~5.1.8",
     "expo-status-bar": "~2.2.3",
     "firebase": "^11.6.1",
     "fuse.js": "^7.1.0",

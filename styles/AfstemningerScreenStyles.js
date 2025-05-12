@@ -58,4 +58,23 @@ export const styles = StyleSheet.create({
     height: 40, // Ensures proper height for the input
     fontSize: 16,
   },
-});
+
+monthHeader: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  marginVertical: 12,
+  paddingHorizontal: 16,
+},
+monthText: {
+  fontSize: 16,
+  fontWeight: 'bold',
+  marginRight: 10,
+  color: '#555',
+},
+monthDivider: {
+  flex: 1,
+  height: 1,
+  backgroundColor: '#ddd',
+},})
+
+

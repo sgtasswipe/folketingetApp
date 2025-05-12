@@ -6,6 +6,7 @@ import {
   TextInput,
   ActivityIndicator,
   Keyboard,
+  StyleSheet,
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { styles } from "../styles/AfstemningerScreenStyles";
@@ -13,43 +14,77 @@ import VotingCard from "../VotingCard";
 
 const AfstemningerScreen = () => {
   const [votingData, setVotingData] = useState([]);
+  const [groupedData, setGroupedData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const pageSize = 20;
   const [selected, setSelected] = useState(null);
-
   // Search functionality
   const [searchQuery, setSearchQuery] = useState("");
+
+  // Helper function to group items by month
+  const groupByMonth = (items) => {
+    // Create a temporary array to hold all items with their month group
+    let processedItems = [];
+    
+    // Track which months we've already processed
+    const processedMonths = new Set();
+    
+    // Process each item
+    items.forEach(item => {
+      if (!item.opdateringsdato) return; //if an item doesnt have a date, return
+      
+      // Extract month and year from the date
+      const date = new Date(item.opdateringsdato);
+      const monthYear = date.toLocaleString('da-DK', { month: 'long', year: 'numeric' });
+      
+      // If this is the first item for this month, add a month header
+      if (!processedMonths.has(monthYear)) {
+        processedMonths.add(monthYear);
+        processedItems.push({
+          id: `month-${monthYear}`,
+          isMonthHeader: true,
+          monthName: monthYear
+        });
+      }
+      
+      // Add the actual item
+      processedItems.push(item);
+    });
+    
+    return processedItems;
+  };
 
   const fetchVotingData = async (searchQuery = "") => {
     try {
       const baseUrl = `https://oda.ft.dk/api/Afstemning?$inlinecount=allpages&$orderby=opdateringsdato desc&$skip=${
         page * pageSize
       }&$top=${pageSize}&$expand=Sagstrin,Sagstrin/Sag`;
-
       const filterQuery = searchQuery
         ? `&$filter=substringof('${encodeURIComponent(
             searchQuery
           )}', Sagstrin/Sag/titel)`
         : "";
-
       const fullUrl = `${baseUrl}${filterQuery}`;
-
       const response = await fetch(fullUrl);
       const data = await response.json();
-
       // Check if we've reached the end
       if (data.value.length === 0) {
         setHasMore(false);
         return;
       }
-
-      // Append new data to existing data
-      setVotingData((prevData) =>
-        page === 0 ? data.value : [...prevData, ...data.value]
-      );
-
+      
+      // Get new data
+      const newData = page === 0 ? data.value : [...votingData, ...data.value];
+      
+      // Update raw voting data
+      setVotingData(newData);
+      
+      // Create grouped data with month headers
+      const grouped = groupByMonth(newData);
+      setGroupedData(grouped);
+      
       setLoading(false);
     } catch (error) {
       console.error("Error fetching voting data:", error);
@@ -69,9 +104,24 @@ const AfstemningerScreen = () => {
     }
   };
 
-  const renderVotingCard = ({ item }) => {
+  const renderItem = ({ item }) => {
+    // If this is a month header, render the month divider
+    if (item.isMonthHeader) {
+      return (
+        <View style={styles.monthHeader}>
+          <Text style={styles.monthText}>{item.monthName}</Text>
+          <View style={styles.monthDivider} />
+        </View>
+      );
+    }
+    
+    // Otherwise render a normal voting card
     return (
-      <VotingCard item={item} selected={selected} setSelected={setSelected} />
+      <VotingCard 
+        item={item} 
+        selected={selected} 
+        setSelected={setSelected} 
+      />
     );
   };
 
@@ -88,6 +138,7 @@ const AfstemningerScreen = () => {
   const handleSearchButtonClick = () => {
     setPage(0);
     setVotingData([]);
+    setGroupedData([]);
     setHasMore(true);
     setLoading(true);
     fetchVotingData(searchQuery);
@@ -110,12 +161,11 @@ const AfstemningerScreen = () => {
         />
       </View>
       <Text style={styles.screenTitle}>Afstemninger</Text>
-
-      {votingData.length > 0 ? (
+      {groupedData.length > 0 ? (
         <FlatList
-          data={votingData}
-          keyExtractor={(item) => item.id.toString()}
-          renderItem={renderVotingCard}
+          data={groupedData}
+          keyExtractor={(item) => item.isMonthHeader ? item.id : item.id.toString()}
+          renderItem={renderItem}
           onEndReached={loadMoreData}
           onEndReachedThreshold={0.5}
           ListFooterComponent={renderFooter}
@@ -129,5 +179,7 @@ const AfstemningerScreen = () => {
     </View>
   );
 };
+
+
 
 export default AfstemningerScreen;

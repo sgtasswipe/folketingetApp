@@ -6,55 +6,42 @@ import {
   Pressable,
   useColorScheme,
   Alert,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { styles } from "../styles/LoginStyles";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { styles } from "../styles/LoginStyles";
 
-export default function SignUp2({ auth }) {
+export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const colorScheme = useColorScheme();
 
-  function handleSignUp() {
-    if (!email || !password) {
-      Alert.alert("Error", "Please enter both email and password");
-      return;
-    }
-
-    if (!auth) {
-      Alert.alert("Error", "Authentication service not available");
-      return;
-    }
-
+  const handleSignUp = async () => {
     if (password.length < 6) {
       Alert.alert("Error", "Password must be at least 6 characters");
       return;
     }
 
     setLoading(true);
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredentials) => {
-        console.log("Signed up with:", userCredentials.user.email);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log("Error:", error.message);
-        Alert.alert("Sign Up Error", error.message);
-        setLoading(false);
-      });
-  }
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+    });
 
-  if (!auth) {
-    return (
-      <View style={styles.container}>
-        <Text>Authentication service is not available.</Text>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    );
-  }
+    setLoading(false);
+
+    if (error) {
+      console.log("Supabase error:", error.message);
+      Alert.alert("Sign Up Error", error.message);
+    } else {
+      console.log("Supabase sign-up success:", data);
+      Alert.alert(
+        "Success",
+        "Check your email to confirm your account before logging in."
+      );
+    }
+  };
 
   return (
     <KeyboardAwareScrollView>
@@ -80,7 +67,7 @@ export default function SignUp2({ auth }) {
           secureTextEntry
           style={styles.inputStyle}
         />
-        
+
         {loading ? (
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (

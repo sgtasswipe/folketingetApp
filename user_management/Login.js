@@ -1,78 +1,63 @@
-import React, { useState } from "react";
+/*import React, { useState } from "react";
 import {
   View,
   TextInput,
   Text,
   Pressable,
-  StyleSheet,
   useColorScheme,
   Alert,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
-import {
-  signInWithEmailAndPassword,
-  signInAnonymously
-} from "firebase/auth";
 import { styles } from "../styles/LoginStyles";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 
-export default function Login({ navigation, auth }) {
+import { useNavigation } from "@react-navigation/native";
+
+export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const colorScheme = useColorScheme();
-  
-  function handleLogin() {
+  const navigation = useNavigation();
+
+  const handleLogin = async () => {
     if (!email || !password) {
       Alert.alert("Error", "Please enter both email and password");
       return;
     }
 
-    if (!auth) {
-      Alert.alert("Error", "Authentication service not available");
-      return;
-    }
+    setLoading(true);
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    setLoading(false);
 
-    setLoading(true);
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredentials) => {
-        console.log("Logged in with:", userCredentials.user.email);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log("Error:", error.message);
-        Alert.alert("Login Error", error.message);
-        setLoading(false);
-      });
-  }
-  
-  function handleGuestLogin() {
-    if (!auth) {
-      Alert.alert("Error", "Authentication service not available");
-      return;
+    if (error) {
+      console.log("Supabase login error:", error.message);
+      Alert.alert("Login Error", error.message);
+    } else {
+      console.log("Logged in as:", data.user.email);
+      console.log("Signed in user:", data?.user);
+
+      Alert.alert("Success", "You are now logged in.");
+      
     }
-    
-    setLoading(true);
-    signInAnonymously(auth)
-      .then(() => {
-        console.log("Signed in anonymously");
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log("An error occurred:", error.message);
-        Alert.alert("Guest Login Error", error.message);
-        setLoading(false);
-      });
+  };
+const handleGuestLogin = async () => {
+  setLoading(true);
+  const { data, error } = await supabase.auth.signInAnonymously();
+  setLoading(false);
+
+  if (error) {
+    console.log("Anon sign-in error:", error.message);
+    Alert.alert("Sign in Anon Failed", error.message);
+  } else {
+    console.log("Anon sign-in success! User ID:", data.user?.id);
+    console.log("Session from anon sign-in:", data.session); // <== Add this
   }
- 
-  if (!auth) {
-    return (
-      <View style={styles.container}>
-        <Text>Authentication service is not available.</Text>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    );
-  }
+};
+
 
   return (
     <KeyboardAwareScrollView>
@@ -82,9 +67,10 @@ export default function Login({ navigation, auth }) {
           { backgroundColor: colorScheme === "dark" ? "black" : "white" },
         ]}
       >
-        <Text style={styles.title}>Log in her:</Text>
+        <Text style={styles.title}>Log ind</Text>
         <TextInput
           placeholder="Email"
+          email
           value={email}
           onChangeText={setEmail}
           style={styles.inputStyle}
@@ -98,7 +84,7 @@ export default function Login({ navigation, auth }) {
           secureTextEntry
           style={styles.inputStyle}
         />
-        
+
         {loading ? (
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
@@ -106,7 +92,10 @@ export default function Login({ navigation, auth }) {
             <Pressable style={styles.buttonStyle} onPress={handleLogin}>
               <Text style={styles.buttonText}>Login</Text>
             </Pressable>
-            <Pressable style={styles.buttonStyle} onPress={() => navigation.navigate("SignUp")}>
+            <Pressable
+              style={styles.buttonStyle}
+              onPress={() => navigation.navigate("SignUp")}
+            >
               <Text style={styles.buttonText}>Opret dig som bruger</Text>
             </Pressable>
             <Pressable style={styles.buttonStyle} onPress={handleGuestLogin}>
@@ -118,3 +107,4 @@ export default function Login({ navigation, auth }) {
     </KeyboardAwareScrollView>
   );
 }
+*/
