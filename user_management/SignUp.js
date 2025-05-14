@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+/*import React, { useState } from "react";
 import {
   View,
   TextInput,
@@ -79,3 +79,4 @@ export default function SignUp() {
     </KeyboardAwareScrollView>
   );
 }
+*/
