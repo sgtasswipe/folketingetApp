@@ -21,20 +21,19 @@
     "expo-constants": "^17.1.5",
     "expo-dev-client": "~5.1.8",
     "expo-status-bar": "~2.2.3",
-    "firebase": "^11.6.1",
+    "firebase": "^11.7.3",
     "fuse.js": "^7.1.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
     "react-native": "0.79.2",
     "react-native-gesture-handler": "~2.24.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
-
+    "react-native-pie-chart": "^4.0.1",
     "react-native-reanimated": "~3.17.4",
     "react-native-safe-area-context": "5.4.0",
     "react-native-screens": "~4.10.0",
     "react-native-vector-icons": "^10.2.0",
-    "react-native-web": "^0.20.0",
-    "react-native-pie-chart": "^4.0.1"
+    "react-native-web": "^0.20.0"
   },
   "devDependencies": {
     "@babel/core": "^7.26.0"
