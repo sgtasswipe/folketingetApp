@@ -1,110 +1,87 @@
-/*import React, { useState } from "react";
-import {
-  View,
-  TextInput,
-  Text,
-  Pressable,
-  useColorScheme,
-  Alert,
-  ActivityIndicator,
-} from "react-native";
-import { styles } from "../styles/LoginStyles";
-import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
-
+import React, { useState } from "react";
+import { View, Text, TextInput, Pressable, Alert, ActivityIndicator } from "react-native";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../utilities/firebaseConfig"
 import { useNavigation } from "@react-navigation/native";
+import { styles } from "../styles/LoginStyles";
 
 export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const colorScheme = useColorScheme();
   const navigation = useNavigation();
 
   const handleLogin = async () => {
     if (!email || !password) {
-      Alert.alert("Error", "Please enter both email and password");
+      Alert.alert("Fejl", "Udfyld både email og adgangskode");
       return;
     }
 
     setLoading(true);
-    const { data, error } = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    setLoading(false);
-
-    if (error) {
-      console.log("Supabase login error:", error.message);
-      Alert.alert("Login Error", error.message);
-    } else {
-      console.log("Logged in as:", data.user.email);
-      console.log("Signed in user:", data?.user);
-
-      Alert.alert("Success", "You are now logged in.");
-      
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      Alert.alert("Login fejlede", error.message);
+    } finally {
+      setLoading(false);
     }
   };
-const handleGuestLogin = async () => {
-  setLoading(true);
-  const { data, error } = await supabase.auth.signInAnonymously();
-  setLoading(false);
-
-  if (error) {
-    console.log("Anon sign-in error:", error.message);
-    Alert.alert("Sign in Anon Failed", error.message);
-  } else {
-    console.log("Anon sign-in success! User ID:", data.user?.id);
-    console.log("Session from anon sign-in:", data.session); // <== Add this
+  function handleGuestLogin() {
+    if (!auth) {
+      Alert.alert("Error", "Authentication service not available");
+      return;
+    }
+    
+    setLoading(true);
+    signInAnonymously(auth)
+      .then(() => {
+        console.log("Signed in anonymously");
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log("An error occurred:", error.message);
+        Alert.alert("Guest Login Error", error.message);
+        setLoading(false);
+      });
   }
-};
-
 
   return (
-    <KeyboardAwareScrollView>
-      <View
-        style={[
-          styles.container,
-          { backgroundColor: colorScheme === "dark" ? "black" : "white" },
-        ]}
-      >
-        <Text style={styles.title}>Log ind</Text>
-        <TextInput
-          placeholder="Email"
-          email
-          value={email}
-          onChangeText={setEmail}
-          style={styles.inputStyle}
-          keyboardType="email-address"
-          autoCapitalize="none"
-        />
-        <TextInput
-          placeholder="Password"
-          value={password}
-          onChangeText={setPassword}
-          secureTextEntry
-          style={styles.inputStyle}
-        />
+    <View style={styles.container}>
+      <Text style={styles.title}>Log ind</Text>
+      <TextInput
+        style={styles.inputStyle}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+        keyboardType="email-address"
+        autoCapitalize="none"
+      />
+      <TextInput
+        style={styles.inputStyle}
+        placeholder="Adgangskode"
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+      />
 
-        {loading ? (
-          <ActivityIndicator size="large" color="#0000ff" />
-        ) : (
-          <>
-            <Pressable style={styles.buttonStyle} onPress={handleLogin}>
-              <Text style={styles.buttonText}>Login</Text>
-            </Pressable>
-            <Pressable
-              style={styles.buttonStyle}
-              onPress={() => navigation.navigate("SignUp")}
-            >
-              <Text style={styles.buttonText}>Opret dig som bruger</Text>
-            </Pressable>
-            <Pressable style={styles.buttonStyle} onPress={handleGuestLogin}>
+      {loading ? (
+        <ActivityIndicator />
+      ) : (
+        <>
+          <Pressable style={styles.buttonStyle} onPress={handleLogin}>
+            <Text style={styles.buttonText}>Login</Text>
+          </Pressable>
+          <Pressable
+            style={styles.buttonStyle}
+            onPress={() => navigation.navigate("SignUp")}
+          >
+            <Text style={styles.buttonText}>Opret bruger</Text>
+          </Pressable>
+          <Pressable style={styles.buttonStyle} onPress={handleGuestLogin}>
               <Text style={styles.buttonText}>Forsæt som gæst</Text>
             </Pressable>
-          </>
-        )}
-      </View>
-    </KeyboardAwareScrollView>
+        </>
+      )}
+    </View>
   );
 }
-*/

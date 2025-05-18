@@ -1,4 +1,4 @@
-/*import React, { useState } from "react";
+import React, { useState } from "react";
 import {
   View,
   TextInput,
@@ -11,6 +11,10 @@ import {
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { styles } from "../styles/LoginStyles";
 
+// 🔥 Firebase
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../utilities/firebaseConfig";
+
 export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -19,27 +23,19 @@ export default function SignUp() {
 
   const handleSignUp = async () => {
     if (password.length < 6) {
-      Alert.alert("Error", "Password must be at least 6 characters");
+      Alert.alert("Fejl", "Adgangskoden skal være mindst 6 tegn.");
       return;
     }
 
     setLoading(true);
-    const { data, error } = await supabase.auth.signUp({
-      email,
-      password,
-    });
-
-    setLoading(false);
-
-    if (error) {
-      console.log("Supabase error:", error.message);
-      Alert.alert("Sign Up Error", error.message);
-    } else {
-      console.log("Supabase sign-up success:", data);
-      Alert.alert(
-        "Success",
-        "Check your email to confirm your account before logging in."
-      );
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      Alert.alert("Bruger oprettet", "Du er nu registreret og logget ind.");
+    } catch (error) {
+      console.log("Firebase fejl:", error.message);
+      Alert.alert("Fejl ved oprettelse", error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -51,7 +47,7 @@ export default function SignUp() {
           { backgroundColor: colorScheme === "dark" ? "black" : "white" },
         ]}
       >
-        <Text style={styles.title}>Sign Up</Text>
+        <Text style={styles.title}>Opret bruger</Text>
         <TextInput
           placeholder="Email"
           value={email}
@@ -61,7 +57,7 @@ export default function SignUp() {
           autoCapitalize="none"
         />
         <TextInput
-          placeholder="Password"
+          placeholder="Adgangskode"
           value={password}
           onChangeText={setPassword}
           secureTextEntry
@@ -72,11 +68,10 @@ export default function SignUp() {
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
           <Pressable style={styles.buttonStyle} onPress={handleSignUp}>
-            <Text style={styles.buttonText}>Sign Up</Text>
+            <Text style={styles.buttonText}>Opret bruger</Text>
           </Pressable>
         )}
       </View>
     </KeyboardAwareScrollView>
   );
 }
-*/
