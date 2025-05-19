@@ -1,5 +1,6 @@
 // app.config.js
 import 'dotenv/config';
+import { version } from 'react';
 
 export default {
   expo: {
@@ -26,9 +27,10 @@ export default {
     android: {
       adaptiveIcon: {
         foregroundImage: "/assets/adaptive-icon.png",
-        backgroundColor: "#FFFFFF"
-      }
-    },
+        backgroundColor: "#FFFFF",
+    },  package: "com.intelliJKingZ.folketinget",
+        versionCode: 1 },
+    
     web: {
       favicon: "/assets/favicon.png"
     },

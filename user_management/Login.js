@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { View, Text, TextInput, Pressable, Alert, ActivityIndicator } from "react-native";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { View, Text, TextInput, Pressable, Alert, ActivityIndicator, TouchableOpacity } from "react-native";
+import { signInWithEmailAndPassword, signInAnonymously } from "firebase/auth";
 import { auth } from "../utilities/firebaseConfig"
 import { useNavigation } from "@react-navigation/native";
 import { styles } from "../styles/LoginStyles";
@@ -40,7 +40,7 @@ export default function Login() {
       })
       .catch((error) => {
         console.log("An error occurred:", error.message);
-        Alert.alert("Guest Login Error", error.message);
+        Alert.alert("Der var en fejl med gæste-login", error.message);
         setLoading(false);
       });
   }
@@ -68,18 +68,18 @@ export default function Login() {
         <ActivityIndicator />
       ) : (
         <>
-          <Pressable style={styles.buttonStyle} onPress={handleLogin}>
+          <TouchableOpacity style={styles.buttonStyle} onPress={handleLogin}>
             <Text style={styles.buttonText}>Login</Text>
-          </Pressable>
-          <Pressable
+          </TouchableOpacity>
+          <TouchableOpacity
             style={styles.buttonStyle}
             onPress={() => navigation.navigate("SignUp")}
           >
             <Text style={styles.buttonText}>Opret bruger</Text>
-          </Pressable>
-          <Pressable style={styles.buttonStyle} onPress={handleGuestLogin}>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.buttonStyle} onPress={handleGuestLogin}>
               <Text style={styles.buttonText}>Forsæt som gæst</Text>
-            </Pressable>
+            </TouchableOpacity>
         </>
       )}
     </View>

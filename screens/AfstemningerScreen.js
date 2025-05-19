@@ -74,7 +74,7 @@ const AfstemningerScreen = () => {
         setHasMore(false);
         return;
       }
-      
+      setLoading(true)
       // Get new data
       const newData = page === 0 ? data.value : [...votingData, ...data.value];
       
@@ -161,21 +161,29 @@ const AfstemningerScreen = () => {
         />
       </View>
       <Text style={styles.screenTitle}>Afstemninger</Text>
-      {groupedData.length > 0 ? (
-        <FlatList
-          data={groupedData}
-          keyExtractor={(item) => item.isMonthHeader ? item.id : item.id.toString()}
-          renderItem={renderItem}
-          onEndReached={loadMoreData}
-          onEndReachedThreshold={0.5}
-          ListFooterComponent={renderFooter}
-          contentContainerStyle={styles.listContainer}
-        />
-      ) : (
-        <View style={styles.centeredContainer}>
-          <Text style={styles.noDataText}>Ingen afstemninger fundet</Text>
-        </View>
-      )}
+    {loading ? (
+  <View style={styles.centeredContainer}>
+    <ActivityIndicator size="large" color="#0066cc" />
+    <Text style={styles.loadingText}>Indlæser afstemninger...</Text>
+  </View>
+) : groupedData.length > 0 ? (
+  <FlatList
+    data={groupedData}
+    keyExtractor={(item) =>
+      item.isMonthHeader ? item.id : item.id.toString()
+    }
+    renderItem={renderItem}
+    onEndReached={loadMoreData}
+    onEndReachedThreshold={0.5}
+    ListFooterComponent={renderFooter}
+    contentContainerStyle={styles.listContainer}
+  />
+) : (
+  <View style={styles.centeredContainer}>
+    <Text style={styles.noDataText}>Ingen afstemninger fundet</Text>
+  </View>
+)}
+
     </View>
   );
 };
