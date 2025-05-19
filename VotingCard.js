@@ -8,7 +8,7 @@ import { formatDate } from "./utilities/dateFormatter";
 function monthSplitter({item}) {
   date = item.opdateringsdato
   let monthNumber = date.slice(5,7)
-  console.log(monthNumber)
+  
   
 }
 const VotingCard = ({ item, selected, setSelected }) => {

@@ -76,6 +76,15 @@ monthDivider: {
   flex: 1,
   height: 1,
   backgroundColor: '#ddd',
-},})
+},
+clearButton: {
+  marginLeft: 8,
+  color: "#0066cc",
+  fontWeight: "600",
+  paddingHorizontal: 8,
+  paddingVertical: 4,
+  borderRadius: 6,
+},
+})
 
 

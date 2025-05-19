@@ -144,6 +144,16 @@ const AfstemningerScreen = () => {
     fetchVotingData(searchQuery);
   };
 
+  const handleClearSearch = () => {
+  setSearchQuery("");
+  setPage(0);
+  setVotingData([]);
+  setGroupedData([]);
+  setHasMore(true);
+  setLoading(true);
+  fetchVotingData("");
+};
+
   return (
     <View style={styles.container}>
       <View style={styles.searchContainer}>
@@ -159,6 +169,10 @@ const AfstemningerScreen = () => {
             Keyboard.dismiss();
           }}
         />
+        {searchQuery.length > 0 && (
+   <Icon name="close-circle" size={20} color="#cc0000" onPress={handleClearSearch} />
+
+  )}
       </View>
       <Text style={styles.screenTitle}>Afstemninger</Text>
     {loading ? (
