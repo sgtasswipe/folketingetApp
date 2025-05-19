@@ -5,14 +5,9 @@ import { styles } from "./styles/VotingCardStyles";
 import { formatDate } from "./utilities/dateFormatter";
 
 
-function monthSplitter({item}) {
-  date = item.opdateringsdato
-  let monthNumber = date.slice(5,7)
-  
-  
-}
+
 const VotingCard = ({ item, selected, setSelected }) => {
-  monthSplitter({item})
+  
    const navigation = useNavigation();
   return (
     

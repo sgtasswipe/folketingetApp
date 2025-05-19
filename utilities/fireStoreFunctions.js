@@ -1,7 +1,7 @@
-import { doc, setDoc } from "firebase/firestore";
+import { doc, setDoc, getDoc, getDocs, collection } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { db } from "./firebaseConfig"; // your firebase setup file
-
+import { Alert } from "react-native";
 export const saveFavorite = async (afstemning) => {
   const user = getAuth().currentUser;
   if (!user) return;
@@ -15,7 +15,28 @@ export const saveFavorite = async (afstemning) => {
       timestamp: Date.now(),
     });
     console.log("Favorite saved!");
+    Alert.alert("Afstemning saved!")
   } catch (error) {
     console.error("Error saving favorite:", error);
   }
 };
+
+export const getAllFavorites = async() => {
+    const user= getAuth().currentUser;
+    if (!user)
+        return
+    
+        const favsRef = collection(db,"users", user.uid, "favorites")
+        const snapshot = await getDocs(favsRef)
+        return snapshot.docs.map(doc => doc.data())
+    }
+
+const isFavorite = async (afstemningId) => {
+  const user = getAuth().currentUser;
+  if (!user) return false;
+
+  const favRef = doc(db, "users", user.uid, "favorites", afstemningId.toString());
+  const snapshot = await getDoc(favRef);
+  return snapshot.exists();
+};
+

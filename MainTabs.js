@@ -6,6 +6,7 @@ import AfstemningerScreen from "./screens/AfstemningerScreen";
 import AboutScreen from "./screens/AboutScreen";
 import VoteInformationScreen from "./screens/VoteInformationScreen";
 import { Ionicons } from '@expo/vector-icons';
+import FavoritesScreen from "./screens/FavoritesScreen";
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -35,6 +36,7 @@ function BottomTabs() {
       <Tab.Screen name="Home" component={HomeScreen} />
       <Tab.Screen name="Afstemninger" component={AfstemningerScreen} />
       <Tab.Screen name="Om data" component={AboutScreen} />
+      <Tab.Screen name="Favoritter" component={FavoritesScreen} />
     </Tab.Navigator>
   );
 }
