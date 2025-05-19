@@ -50,6 +50,18 @@ const styles = StyleSheet.create({
     fontSize: 16,
     textAlign: "center",
   },
+  button: {
+  backgroundColor: '#a6192e',
+  padding: 12,
+  borderRadius: 8,
+  marginTop: 16,
+  alignItems: 'center',
+},
+buttonText: {
+  color: '#fff',
+  fontWeight: 'bold',
+},
+
 });
 
 export default styles;

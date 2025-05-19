@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, ScrollView, ActivityIndicator } from "react-native";
+import { View, Text, ScrollView, ActivityIndicator, TouchableOpacity } from "react-native";
 import styles from "../styles/VoteInformationScreenStyles";
 import { formatDate } from "../utilities/dateFormatter";
+import { saveFavorite } from "../utilities/fireStoreFunctions";
 
 const VoteInformationScreen = ({ route }) => {
   const { item } = route.params;
@@ -99,6 +100,10 @@ const VoteInformationScreen = ({ route }) => {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
+    <TouchableOpacity style={styles.button} onPress={() => saveFavorite(item)}>
+  <Text style={styles.buttonText}>Gem</Text>
+</TouchableOpacity>
+
       <Text style={styles.title}>{displayTitle}</Text>
 
       <View style={styles.infoRow}>
@@ -189,6 +194,7 @@ const VoteInformationScreen = ({ route }) => {
       ) : (
         <Text style={styles.chartLabel}>Resultater ikke tilgængelige</Text>
       )}
+     
     </ScrollView>
   );
 };
