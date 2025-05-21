@@ -15,4 +15,6 @@ console.log(newNumbers)
 //Can also be used to concat array
 const arr1 = [10,20]
 const arr2 = [30,40]
-const arrconcat = [...ar1, ...arr2]
+const arrconcat = [...arr1, ...arr2]
+console.log(arrconcat)
+

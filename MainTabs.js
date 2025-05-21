@@ -25,7 +25,8 @@ function BottomTabs() {
           } else if (route.name === "Om data") {
             iconName = focused ? "information-circle" : "information-circle-outline";
           }
-
+          else if (route.name == "Favoritter") {
+            iconName = focused ? "heart" : "heart-outline"          }
           return <Ionicons name={iconName} size={size} color={color} />;
         },
         tabBarActiveTintColor: "#a6192e",

@@ -11,6 +11,7 @@ import {
 import Icon from "react-native-vector-icons/Ionicons";
 import { styles } from "../styles/AfstemningerScreenStyles";
 import VotingCard from "../VotingCard";
+import { saveFavorite } from "../utilities/fireStoreFunctions";
 
 const AfstemningerScreen = () => {
   const [votingData, setVotingData] = useState([]);
@@ -154,6 +155,7 @@ const AfstemningerScreen = () => {
   fetchVotingData("");
 };
 
+//todo move search-helper functions to seperate component
   return (
     <View style={styles.container}>
       <View style={styles.searchContainer}>

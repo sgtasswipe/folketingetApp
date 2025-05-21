@@ -22,7 +22,7 @@ const FavoritesScreen = () => {
     };
 
     fetchFavorites();
-  }, []);
+  }, [favorites]);
 
   const renderItem = ({ item }) => (
     <TouchableOpacity style={styles.card}>
