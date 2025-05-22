@@ -20,11 +20,7 @@ const VotingCard = ({ item, selected, setSelected }) => {
           { flexDirection: "column", alignItems: "flex-start" },
         ]}
       >
-        <Text style={styles.cardTitle}>
-          {item.typeid === 1
-            ? item.Sagstrin.Sag.titel
-            : item.Sagstrin.Sag.titelkort}
-        </Text>
+        <Text style={styles.cardTitle}>{item.Sagstrin.Sag.titelkort}</Text>
       </View>
 
       <Text style={styles.dateText}>
