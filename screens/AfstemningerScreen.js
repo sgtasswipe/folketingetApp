@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import Icon from "react-native-vector-icons/Ionicons";
 import { styles } from "../styles/AfstemningerScreenStyles";
-import VotingCard from "../VotingCard";
+import VotingCard from "../components/VotingCard";
 import { saveFavorite } from "../utilities/fireStoreFunctions";
 
 const AfstemningerScreen = () => {

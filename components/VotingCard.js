@@ -1,8 +1,8 @@
 import React from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { styles } from "./styles/VotingCardStyles";
-import { formatDate } from "./utilities/dateFormatter";
+import { styles } from "../styles/VotingCardStyles";
+import { formatDate } from "../utilities/dateFormatter";
 
 const VotingCard = ({ item, selected, setSelected }) => {
   const navigation = useNavigation();
