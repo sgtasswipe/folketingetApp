@@ -100,9 +100,9 @@ const VoteInformationScreen = ({ route }) => {
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-    <TouchableOpacity style={styles.button} onPress={() => saveFavorite(item)}>
-  <Text style={styles.buttonText}>Gem</Text>
-</TouchableOpacity>
+      <TouchableOpacity style={styles.button} onPress={() => saveFavorite(item)}>
+        <Text style={styles.buttonText}>Gem</Text>
+      </TouchableOpacity>
 
       <Text style={styles.title}>{displayTitle}</Text>
 
@@ -135,58 +135,28 @@ const VoteInformationScreen = ({ route }) => {
           <View style={styles.chartContainer}>
             <View style={styles.barContainer}>
               {ja > 0 && (
-                <View
-                  style={[
-                    styles.bar,
-                    {
-                      backgroundColor: "#4CAF50",
-                      flex: ja,
-                    },
-                  ]}
-                />
+                <View style={[styles.bar, { backgroundColor: "#4CAF50", flex: ja }]} />
               )}
               {nej > 0 && (
-                <View
-                  style={[
-                    styles.bar,
-                    {
-                      backgroundColor: "#F44336",
-                      flex: nej,
-                    },
-                  ]}
-                />
+                <View style={[styles.bar, { backgroundColor: "#F44336", flex: nej }]} />
               )}
               {uden > 0 && (
-                <View
-                  style={[
-                    styles.bar,
-                    {
-                      backgroundColor: "#BDBDBD",
-                      flex: uden,
-                    },
-                  ]}
-                />
+                <View style={[styles.bar, { backgroundColor: "#BDBDBD", flex: uden }]} />
               )}
             </View>
           </View>
 
           <View style={styles.legendContainer}>
             <View style={styles.legendItem}>
-              <View
-                style={[styles.legendColor, { backgroundColor: "#4CAF50" }]}
-              />
+              <View style={[styles.legendColor, { backgroundColor: "#4CAF50" }]} />
               <Text style={styles.legendText}>{ja} Ja</Text>
             </View>
             <View style={styles.legendItem}>
-              <View
-                style={[styles.legendColor, { backgroundColor: "#F44336" }]}
-              />
+              <View style={[styles.legendColor, { backgroundColor: "#F44336" }]} />
               <Text style={styles.legendText}>{nej} Nej</Text>
             </View>
             <View style={styles.legendItem}>
-              <View
-                style={[styles.legendColor, { backgroundColor: "#BDBDBD" }]}
-              />
+              <View style={[styles.legendColor, { backgroundColor: "#BDBDBD" }]} />
               <Text style={styles.legendText}>{uden} Ingen stemme</Text>
             </View>
           </View>
@@ -194,7 +164,6 @@ const VoteInformationScreen = ({ route }) => {
       ) : (
         <Text style={styles.chartLabel}>Resultater ikke tilgængelige</Text>
       )}
-     
     </ScrollView>
   );
 };
