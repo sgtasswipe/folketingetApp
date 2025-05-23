@@ -6,55 +6,38 @@ import {
   Pressable,
   useColorScheme,
   Alert,
-  ActivityIndicator
+  ActivityIndicator,
 } from "react-native";
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { styles } from "../styles/LoginStyles";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
+import { styles } from "../styles/LoginStyles";
 
-export default function SignUp2({ auth }) {
+// 🔥 Firebase
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../utilities/firebaseConfig";
+
+export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const colorScheme = useColorScheme();
 
-  function handleSignUp() {
-    if (!email || !password) {
-      Alert.alert("Error", "Please enter both email and password");
-      return;
-    }
-
-    if (!auth) {
-      Alert.alert("Error", "Authentication service not available");
-      return;
-    }
-
+  const handleSignUp = async () => {
     if (password.length < 6) {
-      Alert.alert("Error", "Password must be at least 6 characters");
+      Alert.alert("Fejl", "Adgangskoden skal være mindst 6 tegn.");
       return;
     }
 
     setLoading(true);
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredentials) => {
-        console.log("Signed up with:", userCredentials.user.email);
-        setLoading(false);
-      })
-      .catch((error) => {
-        console.log("Error:", error.message);
-        Alert.alert("Sign Up Error", error.message);
-        setLoading(false);
-      });
-  }
-
-  if (!auth) {
-    return (
-      <View style={styles.container}>
-        <Text>Authentication service is not available.</Text>
-        <ActivityIndicator size="large" color="#0000ff" />
-      </View>
-    );
-  }
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      Alert.alert("Bruger oprettet", "Du er nu registreret og logget ind.");
+    } catch (error) {
+      console.log("Firebase fejl:", error.message);
+      Alert.alert("Fejl ved oprettelse", error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <KeyboardAwareScrollView>
@@ -64,7 +47,7 @@ export default function SignUp2({ auth }) {
           { backgroundColor: colorScheme === "dark" ? "black" : "white" },
         ]}
       >
-        <Text style={styles.title}>Sign Up</Text>
+        <Text style={styles.title}>Opret bruger</Text>
         <TextInput
           placeholder="Email"
           value={email}
@@ -74,18 +57,18 @@ export default function SignUp2({ auth }) {
           autoCapitalize="none"
         />
         <TextInput
-          placeholder="Password"
+          placeholder="Adgangskode"
           value={password}
           onChangeText={setPassword}
           secureTextEntry
           style={styles.inputStyle}
         />
-        
+
         {loading ? (
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
           <Pressable style={styles.buttonStyle} onPress={handleSignUp}>
-            <Text style={styles.buttonText}>Sign Up</Text>
+            <Text style={styles.buttonText}>Opret bruger</Text>
           </Pressable>
         )}
       </View>

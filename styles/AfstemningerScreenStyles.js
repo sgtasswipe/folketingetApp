@@ -5,7 +5,7 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#f5f5f5",
     padding: 8,
-    paddingTop: 40,
+    paddingTop: 60,
   },
   screenTitle: {
     fontSize: 24,
@@ -47,8 +47,9 @@ export const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,
     shadowRadius: 4,
-    marginBottom: 12,
+    marginBottom: 10,
     marginHorizontal: 8,
+    paddingTop: 8,
   },
   searchIcon: {
     marginRight: 8, // Space between icon and text input
@@ -58,4 +59,32 @@ export const styles = StyleSheet.create({
     height: 40, // Ensures proper height for the input
     fontSize: 16,
   },
-});
+
+monthHeader: {
+  flexDirection: 'row',
+  alignItems: 'center',
+  marginVertical: 12,
+  paddingHorizontal: 16,
+},
+monthText: {
+  fontSize: 16,
+  fontWeight: 'bold',
+  marginRight: 10,
+  color: '#555',
+},
+monthDivider: {
+  flex: 1,
+  height: 1,
+  backgroundColor: '#ddd',
+},
+clearButton: {
+  marginLeft: 8,
+  color: "#0066cc",
+  fontWeight: "600",
+  paddingHorizontal: 8,
+  paddingVertical: 4,
+  borderRadius: 6,
+},
+})
+
+

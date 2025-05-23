@@ -1,6 +1,7 @@
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import Constants from "expo-constants";
+import {getAuth} from "firebase/auth"
 
 // Use environment variables from app.json (expo.extra)
 const firebaseConfig = {
@@ -17,6 +18,6 @@ const app = initializeApp(firebaseConfig);
 
 // Initialize Firestore and Storage (auth removed for now)
 const db = getFirestore(app);
+const auth = getAuth(app);
 
-
-export { db };
+export { db, auth };
