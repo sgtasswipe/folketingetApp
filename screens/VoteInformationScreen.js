@@ -16,6 +16,8 @@ const VoteInformationScreen = ({ route }) => {
   const [voteDetails, setVoteDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [resumeExpanded, setResumeExpanded] = useState(false);
+
 
   useEffect(() => {
     const fetchVoteDetails = async () => {
@@ -23,7 +25,7 @@ const VoteInformationScreen = ({ route }) => {
       setError(null);
       try {
         const response = await fetch(
-          `https://oda.ft.dk/api/Afstemning(${item.id})`
+          `https://oda.ft.dk/api/Afstemning(${item.id})?$expand=Sagstrin,Sagstrin/Sag`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -76,24 +78,55 @@ const VoteInformationScreen = ({ route }) => {
   }
 
   const displayTitle =
-    item?.Sagstrin?.Sag?.titel ??
-    voteDetails?.Sagstrin?.Sag?.titel ??
-    "Ukendt Titel";
-  const displayKonklusion =
-    voteDetails?.konklusion ?? item?.konklusion ?? "Ingen konklusion";
-  const displayOpdateringsdato =
-    voteDetails?.opdateringsdato ?? item?.opdateringsdato;
+    (() => {
+      if (voteDetails?.typeid === 1) {
+        return voteDetails?.Sagstrin?.Sag?.titel;
+      }
+      if (voteDetails?.typeid === 3) {
+        return voteDetails?.Sagstrin?.Sag?.titelkort;
+      }
+      return null;
+    })() ?? "Ukendt Titel";
+
+  const displayResume =
+        (() => {
+      if (voteDetails?.typeid === 1) {
+        return voteDetails?.Sagstrin?.Sag?.resume;
+      }
+      if (voteDetails?.typeid === 3) {
+        return voteDetails?.Sagstrin?.Sag?.titel;
+      }
+      return null;
+    })() ?? "Ukendt Titel";
+
+  const displayKonklusion = voteDetails?.konklusion ?? "Ingen konklusion";
+
+  const displayOpdateringsdato = voteDetails?.opdateringsdato;
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
-      <TouchableOpacity
-        style={styles.button}
-        onPress={() => saveFavorite(item)}
-      >
-        <Text style={styles.buttonText}>Gem</Text>
-      </TouchableOpacity>
-
       <Text style={styles.title}>{displayTitle}</Text>
+
+      <View style={styles.infoRow}>
+        <Text style={styles.label}>Resume:</Text>
+        <View style={{ flex: 1 }}>
+          <Text
+            style={styles.value}
+            numberOfLines={resumeExpanded ? undefined : 5}
+            ellipsizeMode="tail"
+          >
+            {displayResume}
+          </Text>
+          {displayResume.length > 150 && (
+            <TouchableOpacity onPress={() => setResumeExpanded(!resumeExpanded)}>
+              <Text style={styles.expandedText}>
+                {resumeExpanded ? "Vis mindre ▲" : "Vis mere ▼"}
+              </Text>
+            </TouchableOpacity>
+          )}
+        </View>
+      </View>
+
 
       <View style={styles.infoRow}>
         <Text style={styles.label}>Konklusion:</Text>
@@ -107,6 +140,13 @@ const VoteInformationScreen = ({ route }) => {
       </View>
 
       <VoteResultChart ja={ja} nej={nej} uden={uden} />
+
+      <TouchableOpacity
+        style={styles.button}
+        onPress={() => saveFavorite(item)}
+      >
+        <Text style={styles.buttonText}>Gem afstemning</Text>
+      </TouchableOpacity>
     </ScrollView>
   );
 };

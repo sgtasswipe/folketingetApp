@@ -10,9 +10,10 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     textAlign: "center",
   },
-  infoRow: { flexDirection: "row", marginBottom: 12 },
+  infoRow: { flexDirection: "column", marginBottom: 12 },
   label: { fontWeight: "600", color: "#333", width: 120 },
   value: { color: "#333", flex: 1, flexWrap: "wrap" },
+  expandedText: { color: "#a6192e", marginTop: 4, fontWeight: "600" },
   chartLabel: {
     fontSize: 18,
     fontWeight: "600",
