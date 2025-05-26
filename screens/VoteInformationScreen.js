@@ -18,6 +18,7 @@ const VoteInformationScreen = ({ route }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [resumeExpanded, setResumeExpanded] = useState(false);
+  const [textIsTruncated, setTextIsTruncated] = useState(false);
 
   useEffect(() => {
     const fetchVoteDetails = async () => {
@@ -96,19 +97,20 @@ const VoteInformationScreen = ({ route }) => {
         <Text style={styles.label}>Resume:</Text>
         <View style={{ flex: 1 }}>
           <Text
-            style={styles.value}
+            onTextLayout={(e) => {
+              if (e.nativeEvent.lines.length > 5) {
+                setTextIsTruncated(true);
+              }
+            }}
             numberOfLines={resumeExpanded ? undefined : 5}
-            ellipsizeMode="tail"
           >
             {displayResume}
           </Text>
-          {displayResume.length > 200 && (
+          {textIsTruncated && (
             <TouchableOpacity
               onPress={() => setResumeExpanded(!resumeExpanded)}
             >
-              <Text style={styles.expandedText}>
-                {resumeExpanded ? "Vis mindre ▲" : "Vis mere ▼"}
-              </Text>
+              <Text>{resumeExpanded ? "Vis mindre ▲" : "Vis mere ▼"}</Text>
             </TouchableOpacity>
           )}
         </View>
