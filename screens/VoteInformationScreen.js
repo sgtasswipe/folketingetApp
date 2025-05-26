@@ -12,7 +12,7 @@ import { saveFavorite } from "../utilities/fireStoreFunctions";
 import VoteResultChart from "../components/VoteResultChart";
 
 const VoteInformationScreen = ({ route }) => {
-  const { item } = route.params;
+  const { id } = route.params;
   const [voteDetails, setVoteDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -24,7 +24,7 @@ const VoteInformationScreen = ({ route }) => {
       setError(null);
       try {
         const response = await fetch(
-          `https://oda.ft.dk/api/Afstemning(${item.id})?$expand=Sagstrin,Sagstrin/Sag`
+          `https://oda.ft.dk/api/Afstemning(${id})?$expand=Sagstrin,Sagstrin/Sag`
         );
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
@@ -40,7 +40,7 @@ const VoteInformationScreen = ({ route }) => {
     };
 
     fetchVoteDetails();
-  }, [item.id]);
+  }, [id]);
 
   const parseVotesFromConclusion = (conclusion) => {
     if (!conclusion) return { ja: 0, nej: 0, uden: 0 };
@@ -56,7 +56,7 @@ const VoteInformationScreen = ({ route }) => {
     return { ja, nej, uden };
   };
 
-  const conclusion = voteDetails?.konklusion || item?.konklusion || "";
+  const conclusion = voteDetails?.konklusion || "";
   const { ja, nej, uden } = parseVotesFromConclusion(conclusion);
 
   if (loading) {
@@ -143,7 +143,7 @@ const VoteInformationScreen = ({ route }) => {
 
       <TouchableOpacity
         style={styles.button}
-        onPress={() => saveFavorite(item)}
+        onPress={() => saveFavorite(voteDetails)}
       >
         <Text style={styles.buttonText}>Gem afstemning</Text>
       </TouchableOpacity>

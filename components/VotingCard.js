@@ -8,7 +8,7 @@ const VotingCard = ({ item, selected, setSelected }) => {
   const navigation = useNavigation();
   return (
     <TouchableOpacity
-      onPress={() => navigation.navigate("VoteInformation", { item })}
+      onPress={() => navigation.navigate("VoteInformation", { id: item.id })}
       style={[
         styles.card,
         { borderLeftColor: item.vedtaget ? "#4CAF50" : "#F44336" },
