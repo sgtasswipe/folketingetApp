@@ -41,7 +41,7 @@ const VoteInformationScreen = ({ route }) => {
     };
 
     fetchVoteDetails();
-  }, [id]);
+  }, []);
 
   if (loading) {
     return (
@@ -69,7 +69,7 @@ const VoteInformationScreen = ({ route }) => {
         return voteDetails?.Sagstrin?.Sag?.titelkort;
       }
       return null;
-    })() ?? "Ukendt Titel";
+    })() ?? "Ingen Titel";
 
   const displayResume =
     (() => {
@@ -80,15 +80,13 @@ const VoteInformationScreen = ({ route }) => {
         return voteDetails?.Sagstrin?.Sag?.titel;
       }
       return null;
-    })() ?? "Ukendt Titel";
+    })() ?? "Intet Resume";
 
   const displayKonklusion = voteDetails?.konklusion ?? "Ingen konklusion";
 
-  const displayOpdateringsdato = voteDetails?.opdateringsdato;
+  const displayOpdateringsdato = voteDetails?.opdateringsdato ?? "Ingen dato";
 
-  const displayVoteResultChart = parseVotesFromConclusion(
-    voteDetails?.konklusion
-  );
+  const parsedVoteResults = parseVotesFromConclusion(voteDetails?.konklusion);
 
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
@@ -120,6 +118,7 @@ const VoteInformationScreen = ({ route }) => {
         <Text style={styles.label}>Konklusion:</Text>
         <Text style={styles.value}>{displayKonklusion}</Text>
       </View>
+
       <View style={styles.infoRow}>
         <Text style={styles.label}>Opdateringsdato:</Text>
         <Text style={styles.value}>
@@ -128,9 +127,9 @@ const VoteInformationScreen = ({ route }) => {
       </View>
 
       <VoteResultChart
-        ja={displayVoteResultChart.ja}
-        nej={displayVoteResultChart.nej}
-        uden={displayVoteResultChart.uden}
+        ja={parsedVoteResults.ja}
+        nej={parsedVoteResults.nej}
+        uden={parsedVoteResults.uden}
       />
 
       <TouchableOpacity
