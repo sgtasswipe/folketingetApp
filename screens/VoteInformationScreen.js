@@ -18,7 +18,6 @@ const VoteInformationScreen = ({ route }) => {
   const [error, setError] = useState(null);
   const [resumeExpanded, setResumeExpanded] = useState(false);
 
-
   useEffect(() => {
     const fetchVoteDetails = async () => {
       setLoading(true);
@@ -89,7 +88,7 @@ const VoteInformationScreen = ({ route }) => {
     })() ?? "Ukendt Titel";
 
   const displayResume =
-        (() => {
+    (() => {
       if (voteDetails?.typeid === 1) {
         return voteDetails?.Sagstrin?.Sag?.resume;
       }
@@ -117,8 +116,10 @@ const VoteInformationScreen = ({ route }) => {
           >
             {displayResume}
           </Text>
-          {displayResume.length > 150 && (
-            <TouchableOpacity onPress={() => setResumeExpanded(!resumeExpanded)}>
+          {displayResume.length > 200 && (
+            <TouchableOpacity
+              onPress={() => setResumeExpanded(!resumeExpanded)}
+            >
               <Text style={styles.expandedText}>
                 {resumeExpanded ? "Vis mindre ▲" : "Vis mere ▼"}
               </Text>
@@ -126,7 +127,6 @@ const VoteInformationScreen = ({ route }) => {
           )}
         </View>
       </View>
-
 
       <View style={styles.infoRow}>
         <Text style={styles.label}>Konklusion:</Text>
