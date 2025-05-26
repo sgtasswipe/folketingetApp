@@ -9,6 +9,7 @@ import {
 import styles from "../styles/VoteInformationScreenStyles";
 import { formatDate } from "../utilities/dateFormatter";
 import { saveFavorite } from "../utilities/fireStoreFunctions";
+import { parseVotesFromConclusion } from "../utilities/parseVotesFromConclusion";
 import VoteResultChart from "../components/VoteResultChart";
 
 const VoteInformationScreen = ({ route }) => {
@@ -41,23 +42,6 @@ const VoteInformationScreen = ({ route }) => {
 
     fetchVoteDetails();
   }, [id]);
-
-  const parseVotesFromConclusion = (conclusion) => {
-    if (!conclusion) return { ja: 0, nej: 0, uden: 0 };
-
-    const jaMatch = conclusion.match(/For stemte (\d+)/i);
-    const nejMatch = conclusion.match(/Imod stemte (\d+)/i);
-    const udenMatch = conclusion.match(/hverken for eller imod stemte (\d+)/i);
-
-    const ja = jaMatch ? parseInt(jaMatch[1], 10) : 0;
-    const nej = nejMatch ? parseInt(nejMatch[1], 10) : 0;
-    const uden = udenMatch ? parseInt(udenMatch[1], 10) : 0;
-
-    return { ja, nej, uden };
-  };
-
-  const conclusion = voteDetails?.konklusion || "";
-  const { ja, nej, uden } = parseVotesFromConclusion(conclusion);
 
   if (loading) {
     return (
@@ -102,6 +86,10 @@ const VoteInformationScreen = ({ route }) => {
 
   const displayOpdateringsdato = voteDetails?.opdateringsdato;
 
+  const displayVoteResultChart = parseVotesFromConclusion(
+    voteDetails?.konklusion
+  );
+
   return (
     <ScrollView style={styles.container} contentContainerStyle={styles.content}>
       <Text style={styles.title}>{displayTitle}</Text>
@@ -139,7 +127,11 @@ const VoteInformationScreen = ({ route }) => {
         </Text>
       </View>
 
-      <VoteResultChart ja={ja} nej={nej} uden={uden} />
+      <VoteResultChart
+        ja={displayVoteResultChart.ja}
+        nej={displayVoteResultChart.nej}
+        uden={displayVoteResultChart.uden}
+      />
 
       <TouchableOpacity
         style={styles.button}
