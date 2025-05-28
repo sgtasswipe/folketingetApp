@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text } from "react-native";
-import styles from "../styles/VoteInformationScreenStyles"; // Or create a separate style file for this if you'd like
+import styles from "../styles/VoteInformationScreenStyles";
 
 const VoteResultChart = ({ ja, nej, uden }) => {
   const total = ja + nej + uden || 1; // avoid division by zero
