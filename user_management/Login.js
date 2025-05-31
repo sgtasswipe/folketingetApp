@@ -26,6 +26,7 @@ export default function Login() {
       setLoading(false);
     }
   };
+  
   function handleGuestLogin() {
     if (!auth) {
       Alert.alert("Error", "Authentication service not available");

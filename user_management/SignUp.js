@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import {
   View,
   TextInput,
-  Text,
-  Pressable,
+  Text,  TouchableOpacity,
   useColorScheme,
   Alert,
   ActivityIndicator,
 } from "react-native";
 import { KeyboardAwareScrollView } from "react-native-keyboard-aware-scroll-view";
 import { styles } from "../styles/LoginStyles";
+import { useNavigation } from "@react-navigation/native";
+
 
 // 🔥 Firebase
 import { createUserWithEmailAndPassword } from "firebase/auth";
@@ -20,6 +21,7 @@ export default function SignUp() {
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const colorScheme = useColorScheme();
+  const navigation = useNavigation();
 
   const handleSignUp = async () => {
     if (password.length < 6) {
@@ -67,9 +69,17 @@ export default function SignUp() {
         {loading ? (
           <ActivityIndicator size="large" color="#0000ff" />
         ) : (
-          <Pressable style={styles.buttonStyle} onPress={handleSignUp}>
+           <>
+          <TouchableOpacity style={styles.buttonStyle} onPress={handleSignUp}>
             <Text style={styles.buttonText}>Opret bruger</Text>
-          </Pressable>
+          </TouchableOpacity>
+          <TouchableOpacity
+              style={[styles.buttonStyle, { backgroundColor: "#888", marginTop: 10 }]}
+              onPress={() => navigation.navigate("Login")}
+            >
+              <Text style={styles.buttonText}>Tilbage til Login</Text>
+            </TouchableOpacity>
+          </>
         )}
       </View>
     </KeyboardAwareScrollView>
