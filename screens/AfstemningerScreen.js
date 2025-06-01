@@ -16,7 +16,8 @@ import { saveFavorite } from "../utilities/fireStoreFunctions";
 const AfstemningerScreen = () => {
   const [votingData, setVotingData] = useState([]);
   const [groupedData, setGroupedData] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true); // For initial load
+  const [loadingMore, setLoadingMore] = useState(false); // For loading more data
   const [page, setPage] = useState(0);
   const [hasMore, setHasMore] = useState(true);
   const pageSize = 20;
@@ -60,7 +61,7 @@ const AfstemningerScreen = () => {
     return processedItems;
   };
 
-  const fetchVotingData = async (searchQuery = "") => {
+  const fetchVotingData = async (searchQuery = "", isLoadingMore = false) => {
     try {
       const baseUrl = `https://oda.ft.dk/api/Afstemning?$inlinecount=allpages&$orderby=opdateringsdato desc&$skip=${
         page * pageSize
@@ -77,12 +78,18 @@ const AfstemningerScreen = () => {
       const fullUrl = `${baseUrl}${filterQuery}`;
       const response = await fetch(fullUrl);
       const data = await response.json();
+      
       // Check if we've reached the end
       if (data.value.length === 0) {
         setHasMore(false);
+        if (isLoadingMore) {
+          setLoadingMore(false);
+        } else {
+          setLoading(false);
+        }
         return;
       }
-      setLoading(true);
+
       // Get new data
       const newData = page === 0 ? data.value : [...votingData, ...data.value];
 
@@ -93,22 +100,28 @@ const AfstemningerScreen = () => {
       const grouped = groupByMonth(newData);
       setGroupedData(grouped);
 
-      setLoading(false);
+      // Set appropriate loading state to false
+      if (isLoadingMore) {
+        setLoadingMore(false);
+      } else {
+        setLoading(false);
+      }
     } catch (error) {
       console.error("Error fetching voting data:", error);
       setLoading(false);
+      setLoadingMore(false);
     }
   };
 
   // Initial data fetch
   useEffect(() => {
-    fetchVotingData(searchQuery);
+    fetchVotingData(searchQuery, page > 0); // Pass true if this is loading more data
   }, [page]); // dependency array. react will re-run this useEffect ( fetching vote data again) whenever page's state is updated.
 
   const loadMoreData = () => {
-    if (!loading && hasMore) {
+    if (!loading && !loadingMore && hasMore) {
+      setLoadingMore(true);
       setPage((prevPage) => prevPage + 1);
-      setLoading(true);
     }
   };
 
@@ -130,7 +143,7 @@ const AfstemningerScreen = () => {
   };
 
   const renderFooter = () => {
-    if (!loading) return null;
+    if (!loadingMore) return null;
     return (
       <View style={styles.loaderContainer}>
         <ActivityIndicator size="large" color="#0066cc" />
@@ -145,6 +158,7 @@ const AfstemningerScreen = () => {
     setGroupedData([]);
     setHasMore(true);
     setLoading(true);
+    setLoadingMore(false);
     fetchVotingData(searchQuery);
   };
 
@@ -155,6 +169,7 @@ const AfstemningerScreen = () => {
     setGroupedData([]);
     setHasMore(true);
     setLoading(true);
+    setLoadingMore(false);
     fetchVotingData("");
   };
 

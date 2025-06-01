@@ -11,7 +11,7 @@ export const parseVotesFromConclusion = (conclusion) => {
   const nej = nejMatch ? parseInt(nejMatch[1], 10) : 0;
   const uden = udenMatch ? parseInt(udenMatch[1], 10) : 0;
 
-  console.log("Vote parsing result:", { ja, nej, uden }); // your log here
+  console.log("Vote parsing result:", { ja, nej, uden }); 
 
   return { ja, nej, uden };
 };

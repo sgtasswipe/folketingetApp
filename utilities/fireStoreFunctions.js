@@ -1,13 +1,13 @@
 import { doc, setDoc, getDoc, getDocs, collection } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { db } from "./firebaseConfig"; // your firebase setup file
+import { db } from "./firebaseConfig"; 
 import { Alert } from "react-native";
 export const saveFavorite = async (afstemning) => {
   const user = getAuth().currentUser;
   if (!user) return;
 
   try {
-    const favRef = doc(db, "users", user.uid, "favorites", afstemning.id.toString());  // ref create a reference (like a path/to/somewhere), in this case to users/{userId}/favorites
+    const favRef = doc(db, "users", user.uid, "favorites", afstemning.id.toString());  //
     await setDoc(favRef, { 
       id: afstemning.id,
       title: afstemning.Sagstrin?.Sag?.titel || "Ukendt titel",
@@ -15,7 +15,7 @@ export const saveFavorite = async (afstemning) => {
       timestamp: Date.now(),
     });
     console.log("Favorite saved!");
-    Alert.alert("Afstemning saved!")
+    Alert.alert("Afstemning blev gemt!")
   } catch (error) {
     console.error("Error saving favorite:", error);
   }
