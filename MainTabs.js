@@ -57,6 +57,7 @@ export default function MainApp() {
           headerTintColor: "#a6192e",
           headerTitle: () => (
             <TouchableOpacity onPress={() => navigation.goBack()}>
+
               <Text style={{ color: "#a6192e", fontSize: 16 }}>
                 Tilbage til afstemninger
               </Text>

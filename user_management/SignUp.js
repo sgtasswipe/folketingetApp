@@ -12,7 +12,7 @@ import { styles } from "../styles/LoginStyles";
 import { useNavigation } from "@react-navigation/native";
 
 
-// 🔥 Firebase
+// Firebase
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../utilities/firebaseConfig";
 

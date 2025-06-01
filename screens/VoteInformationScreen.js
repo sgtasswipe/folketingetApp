@@ -129,7 +129,6 @@ const VoteInformationScreen = ({ route }) => {
       </View>
 
       <VoteResultChart
-        //DID YOU GET THE CHANGES OTTO???//
         ja={parsedVoteResults.ja}
         nej={parsedVoteResults.nej}
         uden={parsedVoteResults.uden}

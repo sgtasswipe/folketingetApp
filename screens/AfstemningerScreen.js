@@ -3,13 +3,12 @@ import {
   View,
   Text,
   FlatList,
-  TextInput,
   ActivityIndicator,
-  Keyboard,
 } from "react-native";
-import Icon from "react-native-vector-icons/Ionicons";
 import { styles } from "../styles/AfstemningerScreenStyles";
+import Icon from "react-native-vector-icons/Ionicons";
 import VotingCard from "../components/VotingCard";
+import SearchBar from "../components/SearchBar"; // 
 
 const AfstemningerScreen = () => {
   const [votingData, setVotingData] = useState([]);
@@ -99,28 +98,12 @@ const AfstemningerScreen = () => {
 
   return (
     <View style={styles.container}>
-      <View style={styles.searchContainer}>
-        <Icon name="search" size={20} color="#888" style={styles.searchIcon} />
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Søg i afstemninger..."
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-          returnKeyType="search"
-          onSubmitEditing={() => {
-            handleSearchButtonClick();
-            Keyboard.dismiss();
-          }}
-        />
-        {searchQuery.length > 0 && (
-          <Icon
-            name="close-circle"
-            size={20}
-            color="#cc0000"
-            onPress={handleClearSearch}
-          />
-        )}
-      </View>
+      <SearchBar
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
+        onSearchSubmit={handleSearchButtonClick}
+        onClearSearch={handleClearSearch}
+      />
 
       <Text style={styles.screenTitle}>Afstemninger</Text>
 
