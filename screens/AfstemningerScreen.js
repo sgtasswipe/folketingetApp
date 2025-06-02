@@ -20,6 +20,11 @@ const AfstemningerScreen = () => {
   const [selected, setSelected] = useState(null);
   const [searchQuery, setSearchQuery] = useState("");
 
+   useEffect(() => {
+    fetchVotingData(searchQuery, page > 0);
+  }, [page]);
+
+
   const fetchVotingData = async (searchQuery = "", isLoadingMore = false) => {
     try {
       const baseUrl = `https://oda.ft.dk/api/Afstemning?$inlinecount=allpages&$orderby=opdateringsdato desc&$skip=${
@@ -54,15 +59,12 @@ const AfstemningerScreen = () => {
     }
   };
 
-  useEffect(() => {
-    fetchVotingData(searchQuery, page > 0);
-  }, [page]);
-
+ 
   const loadMoreData = () => {
     if (!loading && !loadingMore && hasMore) {
       setLoadingMore(true);
       setPage((prevPage) => prevPage + 1);
-    }
+    } 
   };
 
   const renderItem = ({ item }) => (
